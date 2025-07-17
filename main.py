@@ -1,31 +1,45 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton
-from PyQt6.QtCore import QSize, Qt
-import sys
+import customtkinter as ctk
 
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+# Configs
+ctk.set_appearance_mode("dark")
+app = ctk.CTk()
+app.title("analise de hardware")
+app.geometry("500x500")
+app.grid_columnconfigure(0, weight=1)
 
-        self.setWindowTitle("my app")
-        
-        button = QPushButton("press me")
-        button.setCheckable(True)
-        button.clicked.connect(self.the_button_was_clicked)
-        button.clicked.connect(self.the_button_was_toggled)
+label = "AQUI VAI QUALQUER COISA"
 
-        self.setFixedSize(QSize(400,300))
-        self.setCentralWidget(button)
+# functionalities
+def buttonResponse():
+    print("Button Was Pressed")
 
-    def the_button_was_clicked(self):
-        print("button was clicked")
-    
-    def the_button_was_toggled(self, checked):
-        print("this is the status: ", checked )
+def checkBoxResponse(checkbox_widget, checkbox):
+        if checkbox_widget.get() == 1:
+            print(f"Checked {checkbox}")
+        else:
+            print(f"Unchecked {checkbox}")
 
-app = QApplication(sys.argv)
 
-window = MainWindow()
-window.show()
 
-app.exec()
+button = ctk.CTkButton(app, text="Click Me", command=buttonResponse)
+button.pack(padx=20, pady=20)
+button.grid(row=0, column=0, padx=20, pady=20, sticky="ew", columnspan=2)
+
+checkbox_1 = ctk.CTkCheckBox(app, text="checkbox 1")
+checkbox_1.configure(command=lambda: checkBoxResponse(checkbox_1, "Checkbox 1"))
+checkbox_1.grid(row=3, column=3, padx=20, pady=(0, 20), sticky="w")
+
+
+
+
+label_1 = ctk.CTkLabel(app, text=label, fg_color="transparent")
+label_1.grid(row=2, column=0, padx=20, pady=(0, 20) , columnspan=2)
+
+
+
+
+
+
+
+app.mainloop()
